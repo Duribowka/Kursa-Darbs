@@ -5,11 +5,11 @@ int main(){
     int num = 5;
 
     struct stocking stockings[5] = {
-        {"book", "literature", 10, 55},
-        {"vegetables", "consumable", 20, 1673},
-        {"croissant", "consumable", 15, 137},
-        {"pants", "equipment", 35, 48},
-        {"knife", "weapon", 25, 23}
+        {"Programming for Noobs", "literature", "---", "---", "950g", "---", 23.99, 25.5, 356},
+        {"Tomati Kekavas", "vegetables", "---", "---", "200g", "---", 2.89, 10.3, 2537},
+        {"K450 keyboard", "electronics", "---", "Kanitronis", "438g", "---", 35.79, 40.25, 178},
+        {"Cooking Complect", "instruments", "---", "Jokitchen", "800g", "---", 12.90, 33.6, 96},
+        {"Steak", "meat", "---", "Jokitchen", "250g", "---", 8.99, 20, 3589}
 
     };
 
