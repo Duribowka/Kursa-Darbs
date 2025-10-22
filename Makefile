@@ -1,7 +1,7 @@
 CC = gcc
 
-part1:
-	$(CC) part1.c src/*.c -o part1.o -I headers
+main:
+	$(CC) main.c src/*.c -o main.o -I headers
 
 .PHONY: clean
 clean:

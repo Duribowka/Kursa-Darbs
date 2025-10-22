@@ -6,23 +6,23 @@ struct stocking{
     char name[50];
     char type[50];
     char date[50];
-    char brand[50];
     char weight[50];
-    char liters[50];
     float price;
-    float size;
+    float width;
+    float height;
+    char author[50];
     int stock;
 };
 
-struct manufacturers{
-    char manuname[50];
+struct authors{
+    char name;
     char street[50];
     char postal[50];
     char mail[50];
     char website[50];
     char phone[50];
     char country[50];
-    char capital[100];
-}
+    char birthdate[50];
+};
 
 void sort(struct stocking array[], int number);
