@@ -14,10 +14,9 @@ struct stocking{
     int stock;
 };
 
-struct authors{
-    char name;
+struct author{
+    char name[50];
     char street[50];
-    char postal[50];
     char mail[50];
     char website[50];
     char phone[50];
