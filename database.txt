@@ -1,10 +1,10 @@
-programming_for_noobs
-education
-12.10.2024
-4000g
-13
-16
-31
-elena_bobrujska
-12
+Item's name: Programming_Dlja_Chajnikov
+Genre: education
+Release date: 12.03.2009
+Weight: 950g
+Price: 15.89$
+Width: 10.50
+Height: 26.70
+Author: Elena_Bobrujska
+Stock: 128
 

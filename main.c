@@ -1,64 +1,66 @@
 #include "../headers/myFuncts.h"
 
-int main(){
+int main(int argc, char** argv){
 
-    int cnt;
-    char choice;
-    printf("Do you want to add an item(I) or an author(A)?\n");
-    scanf("%c", &choice);
+    int cnt = atoi(argv[3]);
     
-    if (choice == 'I' || choice == 'i'){
+    if (strcmp(argv[1], "item") == 0){
 
-        printf("How many items do you want to add?\ninput> ");
-        scanf("%d", &cnt);
+        if (strcmp(argv[2], "append") == 0){
 
-        struct stocking *stockings = malloc(cnt * sizeof(struct stocking));
+            struct stocking *stockings = malloc(cnt * sizeof(struct stocking));
 
-        for (int i = 0; i<cnt; i++){
+            for (int i = 0; i<cnt; i++){
+                printf("Enter item specifications: ");
+                scanf("%s %s %s %s %f %f %f %s %d",stockings[i].name, stockings[i].type, stockings[i].date, stockings[i].weight, &stockings[i].price, &stockings[i].width, &stockings[i].height, stockings[i].author, &stockings[i].stock);
+            }
 
-            printf("Enter item specifications: ");
-            scanf("%s %s %s %s %f %f %f %s %d",stockings[i].name, stockings[i].type, stockings[i].date, stockings[i].weight, &stockings[i].price, &stockings[i].width, &stockings[i].height, stockings[i].author, &stockings[i].stock);
+            FILE *filepoint = fopen("database.txt", "a");
+            if (filepoint == NULL){
+                printf("FAILURE!");
+                return 0;
+            }
+
+            for (int i = 0; i<cnt; i++){
+                fprintf(filepoint, "Item's name: %s\nGenre: %s\nRelease date: %s\nWeight: %s\nPrice: %.2f$\nWidth: %.2f\nHeight: %.2f\nAuthor: %s\nStock: %d\n\n", stockings[i].name, stockings[i].type, stockings[i].date, stockings[i].weight, stockings[i].price, stockings[i].width, stockings[i].height, stockings[i].author, stockings[i].stock);
+            }
+
+            fclose(filepoint);
         }
-
-        FILE *filepoint = fopen("database.txt", "a");
-        if (filepoint == NULL){
-            printf("FAILURE!");
-            return 0;
+        else if (strcmp(argv[2], "remove") == 0){
+            
         }
-
-        for (int i = 0; i<cnt; i++){
-            fprintf(filepoint, "%s\n%s\n%s\n%s\n%2.lf\n%2.lf\n%2.lf\n%s\n%d\n\n", stockings[i].name, stockings[i].type, stockings[i].date, stockings[i].weight, stockings[i].price, stockings[i].width, stockings[i].height, stockings[i].author, stockings[i].stock);
-        }
-
-        fclose(filepoint);
     }
 
-    else if (choice == 'A' || choice == 'a'){
+    else if (strcmp(argv[1], "author") == 0){
 
-        printf("How many authors do you want to add?\ninput> ");
-        scanf("%d", &cnt);
+        if (strcmp(argv[2], "append") == 0){
 
-        struct author *authors = malloc(cnt * sizeof(struct author));
+            struct author *authors = malloc(cnt * sizeof(struct author));
+        
+            for (int i = 0; i<cnt; i++){
+                printf("Enter author's information: ");
+                scanf("%s %s %s %s %s %s %s", authors[i].name, authors[i].street, authors[i].mail, authors[i].website, authors[i].phone, authors[i].country, authors[i].birthdate);
+            }
 
-        for (int i = 0; i<cnt; i++){
+            FILE *filepoint = fopen("authors.txt", "a");
 
-            printf("Enter author's information: ");
-            scanf("%s %s %s %s %s %s %s", authors[i].name, authors[i].street, authors[i].mail, authors[i].website, authors[i].phone, authors[i].country, authors[i].birthdate);
+            if (filepoint == NULL){
+                printf("FAILURE!");
+                return 0;
+            }
+
+            for (int i = 0; i<cnt; i++){
+                fprintf(filepoint, "Author: %s\nStreet: %s\nE-mail: %s\nWeb-page: %s\nPhone number: %s\nCountry: %s\nDate of birth: %s\n\n", authors[i].name, authors[i].street, authors[i].mail, authors[i].website, authors[i].phone, authors[i].country, authors[i].birthdate);
+            }
+
+            fclose(filepoint);
         }
-
-        FILE *filepoint = fopen("authors.txt", "a");
-        if (filepoint == NULL){
-            printf("FAILURE!");
-            return 0;
-        }
-
-        for (int i = 0; i<cnt; i++){
-            fprintf(filepoint, "%s\n%s\n%s\n%s\n%s\n%s\n%s\n\n", authors[i].name, authors[i].street, authors[i].mail, authors[i].website, authors[i].phone, authors[i].country, authors[i].birthdate);
-        }
-
-        fclose(filepoint);
+    }
+    else{
+        printf("WRONG INPUT GET OUT");
+        return 0;
     }
     
-
     return 0;
 }
