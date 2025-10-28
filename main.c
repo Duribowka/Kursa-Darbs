@@ -1,12 +1,16 @@
 #include "../headers/myFuncts.h"
 
+#define database_file "database.txt"
+#define temp_file "temporary.txt"
+#define authors_file "authors.txt"
+
 int main(int argc, char** argv){
 
     int cnt = atoi(argv[3]);
     
-    if (strcmp(argv[1], "item") == 0){
+    if (strcmp(argv[1], "--itm") == 0){
 
-        if (strcmp(argv[2], "append") == 0){
+        if (strcmp(argv[2], "--apnd") == 0){
 
             struct stocking *stockings = malloc(cnt * sizeof(struct stocking));
 
@@ -15,26 +19,71 @@ int main(int argc, char** argv){
                 scanf("%s %s %s %s %f %f %f %s %d",stockings[i].name, stockings[i].type, stockings[i].date, stockings[i].weight, &stockings[i].price, &stockings[i].width, &stockings[i].height, stockings[i].author, &stockings[i].stock);
             }
 
-            FILE *filepoint = fopen("database.txt", "a");
+            FILE *filepoint = fopen(database_file, "a");
             if (filepoint == NULL){
                 printf("FAILURE!");
                 return 0;
             }
 
             for (int i = 0; i<cnt; i++){
-                fprintf(filepoint, "Item's name: %s\nGenre: %s\nRelease date: %s\nWeight: %s\nPrice: %.2f$\nWidth: %.2f\nHeight: %.2f\nAuthor: %s\nStock: %d\n\n", stockings[i].name, stockings[i].type, stockings[i].date, stockings[i].weight, stockings[i].price, stockings[i].width, stockings[i].height, stockings[i].author, stockings[i].stock);
+                fprintf(filepoint, "Name: %s\nGenre: %s\nRelease date: %s\nWeight: %s\nPrice: %.2f$\nWidth: %.2f\nHeight: %.2f\nAuthor: %s\nStock: %d\n\n", stockings[i].name, stockings[i].type, stockings[i].date, stockings[i].weight, stockings[i].price, stockings[i].width, stockings[i].height, stockings[i].author, stockings[i].stock);
             }
 
             fclose(filepoint);
         }
-        else if (strcmp(argv[2], "remove") == 0){
-            
-        }
+        else if (strcmp(argv[2], "--rm") == 0){
+
+            char nameToDelete[50];
+
+            for (int i = 0; i<cnt; i++){
+                printf("Item that you want to delete: ");
+                scanf(" %[^\n]", nameToDelete);
+
+                FILE *in = fopen(database_file, "r");
+                FILE *out = fopen(temp_file, "w");
+
+                if (!in || !out){
+                    printf("FAILURE CAN'T OPEN FILES\n");
+                    if (in) fclose(in);
+                    if (out) fclose(out);
+                    return 0;
+                }
+
+                char line[100];
+                int skipNext = 0;
+
+                while (fgets(line, sizeof(line), in)){
+        
+                    if (strncmp(line, "Name:", 5) == 0){
+                        char currentName[100];
+                        sscanf(line + 5, " %[^\n]", currentName);
+
+                        if (strcmp(currentName, nameToDelete) == 0){
+                        skipNext = 9;
+                        continue;
+                        }
+                    }
+
+                    if (skipNext > 0){
+                        skipNext--;
+                        continue;
+                    }
+
+                    fputs(line, out);
+                }
+                fclose(in);
+                fclose(out);
+
+                remove(database_file);
+                rename(temp_file, database_file);
+
+                printf("Deleted all data about '%s'.\n", nameToDelete);
+            }
+        }    
     }
+    else if (strcmp(argv[1], "--auth") == 0){
 
-    else if (strcmp(argv[1], "author") == 0){
-
-        if (strcmp(argv[2], "append") == 0){
+        if (strcmp(argv[2], "--apnd") == 0){
 
             struct author *authors = malloc(cnt * sizeof(struct author));
         
@@ -56,6 +105,55 @@ int main(int argc, char** argv){
 
             fclose(filepoint);
         }
+        else if (strcmp(argv[2], "--rm") == 0){
+
+            char nameToDelete[50];
+
+            for (int i = 0; i<cnt; i++){
+                printf("Author that you want to delete: ");
+                scanf(" %[^\n]", nameToDelete);
+
+                FILE *in = fopen(authors_file, "r");
+                FILE *out = fopen(temp_file, "w");
+
+                if (!in || !out){
+                    printf("FAILURE CAN'T OPEN FILES\n");
+                    if (in) fclose(in);
+                    if (out) fclose(out);
+                    return 0;
+                }
+
+                char line[100];
+                int skipNext = 0;
+
+                while (fgets(line, sizeof(line), in)){
+        
+                    if (strncmp(line, "Author:", 7) == 0){
+                        char currentName[100];
+                        sscanf(line + 7, " %[^\n]", currentName);
+
+                        if (strcmp(currentName, nameToDelete) == 0){
+                        skipNext = 7;
+                        continue;
+                        }
+                    }
+
+                    if (skipNext > 0){
+                        skipNext--;
+                        continue;
+                    }
+
+                    fputs(line, out);
+                }
+                fclose(in);
+                fclose(out);
+
+                remove(authors_file);
+                rename(temp_file, authors_file);
+
+                printf("Deleted all data about '%s'.\n", nameToDelete);
+            }
+        }    
     }
     else{
         printf("WRONG INPUT GET OUT");

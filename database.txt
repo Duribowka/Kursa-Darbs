@@ -1,4 +1,4 @@
-Item's name: Programming_Dlja_Chajnikov
+Name: Programming_Dlja_Chajnikov
 Genre: education
 Release date: 12.03.2009
 Weight: 950g
@@ -8,3 +8,32 @@ Height: 26.70
 Author: Elena_Bobrujska
 Stock: 128
 
+Name: Programming
+Genre: education
+Release date: 12.03.2009
+Weight: 950g
+Price: 15.89$
+Width: 10.50
+Height: 26.70
+Author: Elena_Bobrujska
+Stock: 128
+
+Name: Programming_Dlja_Chajnikov2
+Genre: education
+Release date: 12.03.2009
+Weight: 950g
+Price: 15.89$
+Width: 10.50
+Height: 26.70
+Author: Elena_Bobrujska
+Stock: 128
+
+Name: Chajnikov
+Genre: education
+Release date: 12.03.2009
+Weight: 950g
+Price: 15.89$
+Width: 10.50
+Height: 26.70
+Author: Elena_Bobrujska
+Stock: 128
