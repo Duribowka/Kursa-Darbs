@@ -10,7 +10,7 @@ int main(int argc, char** argv){
     
     if (strcmp(argv[1], "--itm") == 0){
 
-        if (strcmp(argv[2], "--apnd") == 0){
+        if (strcmp(argv[2], "--add") == 0){
 
             struct stocking *stockings = malloc(cnt * sizeof(struct stocking));
 
@@ -37,7 +37,7 @@ int main(int argc, char** argv){
 
             for (int i = 0; i<cnt; i++){
                 printf("Item that you want to delete: ");
-                scanf(" %[^\n]", nameToDelete);
+                scanf(" %s", nameToDelete);
 
                 FILE *in = fopen(database_file, "r");
                 FILE *out = fopen(temp_file, "w");
@@ -83,7 +83,7 @@ int main(int argc, char** argv){
     }
     else if (strcmp(argv[1], "--auth") == 0){
 
-        if (strcmp(argv[2], "--apnd") == 0){
+        if (strcmp(argv[2], "--add") == 0){
 
             struct author *authors = malloc(cnt * sizeof(struct author));
         
@@ -111,7 +111,7 @@ int main(int argc, char** argv){
 
             for (int i = 0; i<cnt; i++){
                 printf("Author that you want to delete: ");
-                scanf(" %[^\n]", nameToDelete);
+                scanf(" %s", nameToDelete);
 
                 FILE *in = fopen(authors_file, "r");
                 FILE *out = fopen(temp_file, "w");

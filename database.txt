@@ -8,32 +8,13 @@ Height: 26.70
 Author: Elena_Bobrujska
 Stock: 128
 
-Name: Programming
-Genre: education
-Release date: 12.03.2009
-Weight: 950g
-Price: 15.89$
-Width: 10.50
-Height: 26.70
-Author: Elena_Bobrujska
-Stock: 128
+Name: Misha_v_Strane_Sibiri
+Genre: Horror
+Release date: 10.09.2024
+Weight: 480g
+Price: 19.99$
+Width: 9.62
+Height: 20.20
+Author: Aleksandr_Banochka
+Stock: 243
 
-Name: Programming_Dlja_Chajnikov2
-Genre: education
-Release date: 12.03.2009
-Weight: 950g
-Price: 15.89$
-Width: 10.50
-Height: 26.70
-Author: Elena_Bobrujska
-Stock: 128
-
-Name: Chajnikov
-Genre: education
-Release date: 12.03.2009
-Weight: 950g
-Price: 15.89$
-Width: 10.50
-Height: 26.70
-Author: Elena_Bobrujska
-Stock: 128
