@@ -1,11 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+
+//NEEDS CHECKING
+
+typedef struct{
+    int day;
+    int month;
+    int year;
+}Date;
 
 struct stocking{
     char name[50];
     char type[50];
-    char date[50];
+    Date date;
     char weight[50];
     float price;
     float width;
@@ -21,7 +28,7 @@ struct author{
     char website[50];
     char phone[50];
     char country[50];
-    char birthdate[50];
+    Date birthdate;
 };
 
 void sort(struct stocking array[], int number);

@@ -4,6 +4,8 @@
 #define temp_file "temporary.txt"
 #define authors_file "authors.txt"
 
+//NEEDS CHECKING
+
 int main(int argc, char** argv){
 
     int cnt = atoi(argv[3]);

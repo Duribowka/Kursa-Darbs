@@ -18,3 +18,13 @@ Height: 20.20
 Author: Aleksandr_Banochka
 Stock: 243
 
+Name: Misha_v_Strane_Sibiri
+Genre: Horror
+Release date: 10.09.2024
+Weight: 
+Price: 
+Width: 
+Height: 
+Author: 
+Stock: 
+
