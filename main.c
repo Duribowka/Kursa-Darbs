@@ -1,4 +1,5 @@
-#include "../headers/myFuncts.h"
+#include "../headers/structs.h"
+#include "../headers/mystring.h"
 
 #define database_file "database.txt"
 #define temp_file "temporary.txt"
@@ -76,150 +77,116 @@ int main(int argc, char** argv){
             }
             fprintf(filepoint, "Author: %s\nStreet: %s\nE-mail: %s\nWeb-page: %s\nPhone number: %s\nCountry: %s\nDate of birth: %d.%d.%d\n\n", authors[i].name, authors[i].street, authors[i].mail, authors[i].website, authors[i].phone, authors[i].country, authors[i].birthdate.day, authors[i].birthdate.month, authors[i].birthdate.year);
         }
-    }
-    
-    if (mystrcmp(argv[1], "--itm") == 0){
-
-        if (mystrcmp(argv[2], "--add") == 0){
-
-            
-
-            for (int i = 0; i<cnt; i++){
-                printf("Enter item specifications: ");
-                scanf("%s %s %s %s %f %f %f %s %d",stockings[i].name, stockings[i].type, stockings[i].date, stockings[i].weight, &stockings[i].price, &stockings[i].width, &stockings[i].height, stockings[i].author, &stockings[i].stock);
-            }
-
-            
-
-            for (int i = 0; i<cnt; i++){
-                fprintf(filepoint, "Name: %s\nGenre: %s\nRelease date: %s\nWeight: %s\nPrice: %.2f$\nWidth: %.2f\nHeight: %.2f\nAuthor: %s\nStock: %d\n\n", stockings[i].name, stockings[i].type, stockings[i].date, stockings[i].weight, stockings[i].price, stockings[i].width, stockings[i].height, stockings[i].author, stockings[i].stock);
-            }
-
-            fclose(filepoint);
+        if (mystrcmp(argv[i], "-street") == 0){
+            authors[0].street = argv[i+1];
         }
-        else if (mystrcmp(argv[2], "--rm") == 0){
+        if (mystrcmp(argv[i], "-mail") == 0){
+            authors[0].mail = argv[i+1];
+        }
+        if (mystrcmp(argv[i], "-site") == 0){
+            authors[0].website = argv[i+1];
+        }
+        if (mystrcmp(argv[i], "-mail") == 0){
+            authors[0].mail = argv[i+1];
+        }
+        if (mystrcmp(argv[i], "-phone") == 0){
+            authors[0].phone = argv[i+1];
+        }
+        if (mystrcmp(argv[i], "-country") == 0){
+            authors[0].country = argv[i+1];
+        }
+        if (itemor == 0 && mystrcmp(argv[i], "--rm") == 0){
+            char nameToDelete[50];
+
+            nameToDelete = argv[i+1];
+
+            FILE *in = fopen(database_file, "r");
+            FILE *out = fopen(temp_file, "w");
+
+            if (!in || !out){
+                printf("FAILURE CAN'T OPEN FILES\n");
+                if (in) fclose(in);
+                if (out) fclose(out);
+                return 0;
+            }
+
+            char line[100];
+            int skipNext = 0;
+
+            while (fgets(line, sizeof(line), in)){
+        
+                if (mystrncmp(line, "Name:", 5) == 0){
+                    char currentName[100];
+                    sscanf(line + 5, " %[^\n]", currentName);
+
+                    if (mystrcmp(currentName, nameToDelete) == 0){
+                    skipNext = 9;
+                    continue;
+                    }
+                }
+
+                if (skipNext > 0){
+                    skipNext--;
+                    continue;
+                }
+
+                fputs(line, out);
+            }
+            fclose(in);
+            fclose(out);
+
+            remove(database_file);
+            rename(temp_file, database_file);
+
+            printf("Deleted all data about '%s'.\n", nameToDelete);
+        }
+        else if (itemor == 1 && mystrcmp(argv[i], "--rm") == 0){
 
             char nameToDelete[50];
 
-            for (int i = 0; i<cnt; i++){
-                printf("Item that you want to delete: ");
-                scanf(" %s", nameToDelete);
+            nameToDelete = argv[i+1];
 
-                FILE *in = fopen(database_file, "r");
-                FILE *out = fopen(temp_file, "w");
+            FILE *in = fopen(authors_file, "r");
+            FILE *out = fopen(temp_file, "w");
 
-                if (!in || !out){
-                    printf("FAILURE CAN'T OPEN FILES\n");
-                    if (in) fclose(in);
-                    if (out) fclose(out);
-                    return 0;
-                }
+            if (!in || !out){
+                printf("FAILURE CAN'T OPEN FILES\n");
+                if (in) fclose(in);
+                if (out) fclose(out);
+                return 0;
+            }
 
-                char line[100];
-                int skipNext = 0;
+            char line[100];
+            int skipNext = 0;
 
-                while (fgets(line, sizeof(line), in)){
+            while (fgets(line, sizeof(line), in)){
         
-                    if (mystrncmp(line, "Name:", 5) == 0){
-                        char currentName[100];
-                        sscanf(line + 5, " %[^\n]", currentName);
+                if (mystrncmp(line, "Author:", 7) == 0){
+                    char currentName[100];
+                    sscanf(line + 7, " %[^\n]", currentName);
 
-                        if (mystrcmp(currentName, nameToDelete) == 0){
-                        skipNext = 9;
-                        continue;
-                        }
+                    if (mystrcmp(currentName, nameToDelete) == 0){
+                    skipNext = 7;
+                    continue;
                     }
-
-                    if (skipNext > 0){
-                        skipNext--;
-                        continue;
-                    }
-
-                    fputs(line, out);
                 }
-                fclose(in);
-                fclose(out);
 
-                remove(database_file);
-                rename(temp_file, database_file);
+                if (skipNext > 0){
+                    skipNext--;
+                    continue;
+                }
 
-                printf("Deleted all data about '%s'.\n", nameToDelete);
+                fputs(line, out);
             }
-        }    
-    }
-    else if (mystrcmp(argv[1], "--auth") == 0){
+            fclose(in);
+            fclose(out);
 
-        if (mystrcmp(argv[2], "--add") == 0){
+            remove(authors_file);
+            rename(temp_file, authors_file);
 
-            
+            printf("Deleted all data about '%s'.\n", nameToDelete);
         
-            for (int i = 0; i<cnt; i++){
-                printf("Enter author's information: ");
-                scanf("%s %s %s %s %s %s %s", authors[i].name, authors[i].street, authors[i].mail, authors[i].website, authors[i].phone, authors[i].country, authors[i].birthdate);
-            }
-
-            
-
-            for (int i = 0; i<cnt; i++){
-                
-            }
-
-            fclose(filepoint);
-        }
-        else if (mystrcmp(argv[2], "--rm") == 0){
-
-            char nameToDelete[50];
-
-            for (int i = 0; i<cnt; i++){
-                printf("Author that you want to delete: ");
-                scanf(" %s", nameToDelete);
-
-                FILE *in = fopen(authors_file, "r");
-                FILE *out = fopen(temp_file, "w");
-
-                if (!in || !out){
-                    printf("FAILURE CAN'T OPEN FILES\n");
-                    if (in) fclose(in);
-                    if (out) fclose(out);
-                    return 0;
-                }
-
-                char line[100];
-                int skipNext = 0;
-
-                while (fgets(line, sizeof(line), in)){
-        
-                    if (mystrncmp(line, "Author:", 7) == 0){
-                        char currentName[100];
-                        sscanf(line + 7, " %[^\n]", currentName);
-
-                        if (mystrcmp(currentName, nameToDelete) == 0){
-                        skipNext = 7;
-                        continue;
-                        }
-                    }
-
-                    if (skipNext > 0){
-                        skipNext--;
-                        continue;
-                    }
-
-                    fputs(line, out);
-                }
-                fclose(in);
-                fclose(out);
-
-                remove(authors_file);
-                rename(temp_file, authors_file);
-
-                printf("Deleted all data about '%s'.\n", nameToDelete);
-            }
-        }    
-    }
-    else{
-        printf("WRONG INPUT GET OUT");
-        return 0;
-    }
-    
+        } 
     return 0;
+    }  
 }

@@ -13,7 +13,7 @@ struct stocking{
     char name[50];
     char type[50];
     Date date;
-    char weight[50];
+    int weight;
     float price;
     float width;
     float height;
