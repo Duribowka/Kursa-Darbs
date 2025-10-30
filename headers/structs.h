@@ -31,4 +31,4 @@ struct author{
     Date birthdate;
 };
 
-void sort(struct stocking array[], int number);
+//void sort(struct stocking array[], int number);
