@@ -1,5 +1,6 @@
 #include "../headers/structs.h"
 #include "../headers/mystring.h"
+#include <string.h>
 
 #define database_file "database.txt"
 #define temp_file "temporary.txt"
@@ -13,7 +14,7 @@ int main(int argc, char** argv){
     struct author *authors = malloc(argc * sizeof(struct author));
     //int cnt = atoi(argv[3]);
 
-    for (int cli = 0; cli < argc; cli++){
+    for (int i = 0; i < argc; i++){
 
         int itemor = 0;
 
@@ -24,41 +25,46 @@ int main(int argc, char** argv){
             itemor = 0;
         }
         if (itemor == 0 && mystrcmp(argv[i], "-name") == 0){
-            stockings[0].name = argv[i+1];
+            //stockings[0].name = argv[i+1];
+            strcpy(stockings[0].name, argv[i+1]);
         }
         else if (itemor == 1 && mystrcmp(argv[i], "-name") == 0){
-            authors[0].name = argv[i+1];
+            //authors[0].name = argv[i+1];
+            strcpy(authors[0].name, argv[i+1]);
         }
         if (mystrcmp(argv[i], "-genre") == 0){
-            stockings[0].type = argv[i+1];
+            //stockings[0].type = argv[i+1];
+            strcpy(stockings[0].type, argv[i+1]);
         }
         if (itemor == 0 && mystrcmp(argv[i], "-date") == 0){
-            stockings[0].date.day = argv[i+1];
-            stockings[0].date.month = argv[i+2];
-            stockings[0].date.year = argv[i+3];
+            stockings[0].date.day = myatoi(argv[i+1]);
+            stockings[0].date.month = myatoi(argv[i+2]);
+            stockings[0].date.year = myatoi(argv[i+3]);
+            
         }
         else if (itemor == 1 && mystrcmp(argv[i], "-date") == 0){
-            authors[0].birthdate.day = argv[i+1];
-            authors[0].birthdate.month = argv[i+2];
-            authors[0].birthdate.year = argv[i+3];
+            authors[0].birthdate.day = myatoi(argv[i+1]);
+            authors[0].birthdate.month = myatoi(argv[i+2]);
+            authors[0].birthdate.year = myatoi(argv[i+3]);
         }
         if (mystrcmp(argv[i], "-price") == 0){
-            stockings[0].price = argv[i+1];
+            stockings[0].price = myatoi(argv[i+1]);
         }
         if (mystrcmp(argv[i], "-weight") == 0){
-            stockings[0].weight = argv[i+1];
+            stockings[0].weight = myatoi(argv[i+1]);
         }
         if (mystrcmp(argv[i], "-height") == 0){
-            stockings[0].height = argv[i+1];
+            stockings[0].height = myatoi(argv[i+1]);
         }
         if (mystrcmp(argv[i], "-width") == 0){
-            stockings[0].width = argv[i+1];
+            stockings[0].width = myatoi(argv[i+1]);
         }
         if (mystrcmp(argv[i], "-stock") == 0){
-            stockings[0].stock = argv[i+1];
+            stockings[0].stock = myatoi(argv[i+1]);
         }
         if (mystrcmp(argv[i], "-author") == 0){
-            stockings[0].author == argv[i+1];
+            //stockings[0].author == argv[i+1];
+            strcpy(stockings[0].author, argv[i+1]);
         }
         if (itemor == 0 && mystrcmp(argv[i], "--append") == 0){
 
@@ -67,7 +73,7 @@ int main(int argc, char** argv){
                 printf("FAILURE!");
                 return 0;
             }
-            fprintf(filepoint, "Name: %s\nGenre: %s\nRelease date: %d.%d.%d\nWeight: %s\nPrice: %.2f$\nWidth: %.2f\nHeight: %.2f\nAuthor: %s\nStock: %d\n\n", stockings[0].name, stockings[0].type, stockings[0].date.day, stockings[0].date.month, stockings[0].date.year, stockings[0].weight, stockings[0].price, stockings[0].width, stockings[0].height, stockings[0].author, stockings[0].stock);
+            fprintf(filepoint, "Name: %s\nGenre: %s\nRelease date: %d.%d.%d\nWeight: %dg\nPrice: %.2f$\nWidth: %.2f\nHeight: %.2f\nAuthor: %s\nStock: %d in stock\n\n", stockings[0].name, stockings[0].type, stockings[0].date.day, stockings[0].date.month, stockings[0].date.year, stockings[0].weight, stockings[0].price, stockings[0].width, stockings[0].height, stockings[0].author, stockings[0].stock);
         }
         else if (itemor == 1 && mystrcmp(argv[i], "--append") == 0){
             FILE *filepoint = fopen("authors.txt", "a");
@@ -78,27 +84,34 @@ int main(int argc, char** argv){
             fprintf(filepoint, "Author: %s\nStreet: %s\nE-mail: %s\nWeb-page: %s\nPhone number: %s\nCountry: %s\nDate of birth: %d.%d.%d\n\n", authors[i].name, authors[i].street, authors[i].mail, authors[i].website, authors[i].phone, authors[i].country, authors[i].birthdate.day, authors[i].birthdate.month, authors[i].birthdate.year);
         }
         if (mystrcmp(argv[i], "-street") == 0){
-            authors[0].street = argv[i+1];
+            //authors[0].street = argv[i+1];
+            strcpy(authors[0].street, argv[i+1]);
         }
         if (mystrcmp(argv[i], "-mail") == 0){
-            authors[0].mail = argv[i+1];
+            //authors[0].mail = argv[i+1];
+            strcpy(authors[0].mail, argv[i+1]);
         }
         if (mystrcmp(argv[i], "-site") == 0){
-            authors[0].website = argv[i+1];
+            //authors[0].website = argv[i+1];
+            strcpy(authors[0].website, argv[i+1]);
         }
         if (mystrcmp(argv[i], "-mail") == 0){
-            authors[0].mail = argv[i+1];
+            //authors[0].mail = argv[i+1];
+            strcpy(authors[0].mail, argv[i+1]);
         }
         if (mystrcmp(argv[i], "-phone") == 0){
-            authors[0].phone = argv[i+1];
+            //authors[0].phone = argv[i+1];
+            strcpy(authors[0].phone, argv[i+1]);
         }
         if (mystrcmp(argv[i], "-country") == 0){
-            authors[0].country = argv[i+1];
+            //authors[0].country = argv[i+1];
+            strcpy(authors[0].country, argv[i+1]);
         }
         if (itemor == 0 && mystrcmp(argv[i], "--rm") == 0){
             char nameToDelete[50];
 
-            nameToDelete = argv[i+1];
+            //nameToDelete = argv[i+1];
+            strcpy(nameToDelete, argv[i+1]);
 
             FILE *in = fopen(database_file, "r");
             FILE *out = fopen(temp_file, "w");
@@ -144,7 +157,8 @@ int main(int argc, char** argv){
 
             char nameToDelete[50];
 
-            nameToDelete = argv[i+1];
+            //nameToDelete = argv[i+1];
+            strcpy(nameToDelete, argv[i+1]);
 
             FILE *in = fopen(authors_file, "r");
             FILE *out = fopen(temp_file, "w");

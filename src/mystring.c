@@ -23,3 +23,28 @@ int mystrncmp(const char *str1, const char *str2, unsigned int n){
 
     return (unsigned char)str1[i] - (unsigned char)str2[i];
 }
+
+int myatoi(const char *string){
+    int result = 0;
+    int sign = 1;
+    int i = 0;
+
+    while(string[i] == ' ' || string[i] == '\t' || string[i] == '\n'){
+        i++;
+    }
+
+    if (string[i] == '-'){
+        sign = -1;
+        i++;
+    }
+    else if (string[i] == '+'){
+        i++;
+    }
+
+    while (string[i] >= '0' && string[i] <= '9'){
+        result = result*10+(string[i] - '0');
+        i++;
+    }
+
+    return sign * result;
+}
