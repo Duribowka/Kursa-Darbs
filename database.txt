@@ -28,3 +28,13 @@ Height:
 Author: 
 Stock: 
 
+Name: abobus
+Genre: 
+Release date: 10.9.2024
+Weight: 0g
+Price: 0.00$
+Width: 0.00
+Height: 0.00
+Author: Misha
+Stock: 100 in stock
+

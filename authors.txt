@@ -14,3 +14,11 @@ Phone number: +37122250222
 Country: Sibir
 Date of birth: 28.10.1999
 
+Author: Aboba_Shrekovicha
+Street: gomunkulnaja_9
+E-mail: shrekovicha@gmail.com
+Web-page: 
+Phone number: 
+Country: 
+Date of birth: 0.0.0
+

@@ -48,3 +48,24 @@ int myatoi(const char *string){
 
     return sign * result;
 }
+
+char *mystrcpy(char *dest, const char *source){
+    char *ptr = dest;
+
+    while (*source != '\0'){
+        *dest = *source;
+        dest++;     
+        source++;
+    }
+    *dest = '\0';
+
+    return ptr;
+}
+
+int mystrlen(const char *str){
+    int len = 0;
+    while (str[len] != '\0') {
+        len++;
+    }
+    return len;
+}
