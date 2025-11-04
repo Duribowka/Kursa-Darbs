@@ -1,3 +1,6 @@
+#ifndef STRUCTS_H
+#define STRUCTS_H
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -31,4 +34,4 @@ struct author{
     Date birthdate;
 };
 
-//void sort(struct stocking array[], int number);
+#endif

@@ -1,69 +1,56 @@
 #include "../headers/structs.h"
 #include "../headers/mystring.h"
+#include "../headers/files.h"
 
 #define DATABASE_FILE "database.txt"
 #define TEMP_FILE "temporary.txt"
 #define AUTHORS_FILE "authors.txt"
 
-void append_item(struct stocking *s) {
-    FILE *f = fopen(DATABASE_FILE, "a");
-    if (!f) { printf("FAILURE!\n"); return; }
-    fprintf(f,
-        "Name: %s\nGenre: %s\nRelease date: %d.%d.%d\nWeight: %dg\nPrice: %.2f$\n"
-        "Width: %.2f\nHeight: %.2f\nAuthor: %s\nStock: %d in stock\n\n",
-        s->name, s->type, s->date.day, s->date.month, s->date.year,
-        s->weight, s->price, s->width, s->height, s->author, s->stock
-    );
-    fclose(f);
-}
-
-void append_author(struct author *a) {
-    FILE *f = fopen(AUTHORS_FILE, "a");
-    if (!f) { printf("FAILURE!\n"); return; }
-    fprintf(f,
-        "Author: %s\nStreet: %s\nE-mail: %s\nWeb-page: %s\nPhone number: %s\n"
-        "Country: %s\nDate of birth: %d.%d.%d\n\n",
-        a->name, a->street, a->mail, a->website, a->phone,
-        a->country, a->birthdate.day, a->birthdate.month, a->birthdate.year
-    );
-    fclose(f);
-}
-
-void remove_entry(const char *filename, const char *label, const char *target, int skipLines) {
-    FILE *in = fopen(filename, "r");
-    FILE *out = fopen(TEMP_FILE, "w");
-
-    if (!in || !out) {
-        printf("FAILURE CAN'T OPEN FILES\n");
-        if (in) fclose(in);
-        if (out) fclose(out);
+void print_entry(const char *filename, const char *label, const char *target){
+    FILE *fp = fopen(filename, "r");
+    if (!fp){
+        printf("Failed to open %s!\n", filename);
         return;
     }
 
     char line[256];
-    int skip = 0;
-    while (fgets(line, sizeof(line), in)) {
-        if (!skip && mystrncmp(line, label, mystrlen(label)) == 0) {
-            char current[100];
-            sscanf(line + mystrlen(label), " %[^\n]", current);
+    int printing = 0;
+
+    while (fgets(line, sizeof(line), fp)){
+        
+        int i = 0;
+        while (line[i] == ' ' || line[i] == '\t') i++;
+
+        if (printing && (
+            mystrncmp(line + i, "Name:", 5) == 0 ||
+            mystrncmp(line + i, "Author:", 7) == 0))
+        {
+            break;
+        }
+
+        if (!printing && mystrncmp(line + i, label, mystrlen(label)) == 0){
+            char current[128];
+            sscanf(line + i + mystrlen(label), " %[^\n]", current);
+
             if (mystrcmp(current, target) == 0) {
-                skip = skipLines;
+                printing = 1;
+                printf("%s", line);
                 continue;
             }
         }
-        if (skip > 0) { skip--; continue; }
-        fputs(line, out);
+
+        if (printing)
+            printf("%s", line);
     }
 
-    fclose(in);
-    fclose(out);
-    remove(filename);
-    rename(TEMP_FILE, filename);
+    fclose(fp);
 
-    printf("Deleted all data about '%s'.\n", target);
+    if (!printing){
+        printf("No entry found for '%s'.\n", target);
+    }
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv){
     struct stocking *s = malloc(sizeof(struct stocking));
     struct author *a = malloc(sizeof(struct author));
     int isAuthor = 0;
@@ -99,16 +86,21 @@ int main(int argc, char **argv) {
         else if (mystrcmp(argv[i], "-phone") == 0) mystrcpy(a->phone, argv[i+1]);
         else if (mystrcmp(argv[i], "-country") == 0) mystrcpy(a->country, argv[i+1]);
 
-        else if (mystrcmp(argv[i], "--append") == 0)
+        else if (mystrcmp(argv[i], "--add") == 0)
             isAuthor ? append_author(a) : append_item(s);
 
         else if (mystrcmp(argv[i], "--rm") == 0) {
-            const char *target = argv[i+1];
             if (isAuthor)
-                remove_entry(AUTHORS_FILE, "Author:", target, 7);
+                remove_entry(AUTHORS_FILE, "Author:", argv[i+1]);
             else
-                remove_entry(DATABASE_FILE, "Name:", target, 9);
+                remove_entry(DATABASE_FILE, "Name:", argv[i+1]);
         }
+        else if (mystrcmp(argv[i], "--show") == 0) {
+            if (isAuthor)
+                print_entry(AUTHORS_FILE, "Author:", argv[i+1]);
+            else
+                print_entry(DATABASE_FILE, "Name:", argv[i+1]);
+}
     }
 
     free(s);

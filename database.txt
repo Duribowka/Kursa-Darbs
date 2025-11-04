@@ -5,17 +5,19 @@ Weight: 950g
 Price: 15.89$
 Width: 10.50
 Height: 26.70
-Author: Elena_Bobrujska
+Item's Author: Elena_Bobrujska
 Stock: 128
 
 Name: Misha_v_Strane_Sibiri
 Genre: Horror
 Release date: 10.09.2024
 Weight: 480g
+
 Price: 19.99$
 Width: 9.62
 Height: 20.20
-Author: Aleksandr_Banochka
+
+Item's Author: Aleksandr_Banochka
 Stock: 243
 
 Name: Misha_v_Strane_Sibiri22
@@ -25,7 +27,7 @@ Weight:
 Price: 
 Width: 
 Height: 
-Author: 
+Item's Author: 
 Stock: 
 
 Name: abobus
@@ -35,6 +37,5 @@ Weight: 0g
 Price: 0.00$
 Width: 0.00
 Height: 0.00
-Author: Misha
+Item's Author: Misha
 Stock: 100 in stock
-
