@@ -20,22 +20,13 @@ Height: 20.20
 Item's Author: Aleksandr_Banochka
 Stock: 243
 
-Name: Misha_v_Strane_Sibiri22
-Genre: Horror
-Release date: 10.09.2024
-Weight: 
-Price: 
-Width: 
-Height: 
-Item's Author: 
-Stock: 
-
-Name: abobus
-Genre: 
-Release date: 10.9.2024
+Name: Ahahaha eto ahahah
+Genre: Rzaka
+Release date: 12.12.2015
 Weight: 0g
 Price: 0.00$
 Width: 0.00
 Height: 0.00
-Item's Author: Misha
-Stock: 100 in stock
+Author: 
+Stock: 50 in stock
+

@@ -22,3 +22,11 @@ Phone number:
 Country: 
 Date of birth: 0.0.0
 
+Author: Kirill
+Street: Cdebilnaja 9
+E-mail: 
+Web-page: 
+Phone number: 3141411
+Country: 
+Date of birth: 0.0.0
+
