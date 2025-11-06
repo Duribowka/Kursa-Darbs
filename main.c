@@ -6,48 +6,47 @@
 #define TEMP_FILE "temporary.txt"
 #define AUTHORS_FILE "authors.txt"
 
-void print_entry(const char *filename, const char *label, const char *target){
+void print_entry(const char *filename, const char *entryLabel, const char *entryName) {
     FILE *fp = fopen(filename, "r");
-    if (!fp){
-        printf("Failed to open %s!\n", filename);
+    if (!fp) {
+        printf("FAILURE! Could not open %s.\n", filename);
         return;
     }
 
     char line[256];
-    int printing = 0;
+    int found = 0;
 
     while (fgets(line, sizeof(line), fp)){
-        
-        int i = 0;
-        while (line[i] == ' ' || line[i] == '\t') i++;
 
-        if (printing && (
-            mystrncmp(line + i, "Name:", 5) == 0 ||
-            mystrncmp(line + i, "Author:", 7) == 0))
-        {
-            break;
-        }
+        if (mystrncmp(line, entryLabel, mystrlen(entryLabel)) == 0){
 
-        if (!printing && mystrncmp(line + i, label, mystrlen(label)) == 0){
-            char current[128];
-            sscanf(line + i + mystrlen(label), " %[^\n]", current);
+            if (found)
+                break;
 
-            if (mystrcmp(current, target) == 0) {
-                printing = 1;
+            char current[100];
+            sscanf(line + mystrlen(entryLabel), " %[^\n]", current);
+            if (mystrcmp(current, entryName) == 0){
+                found = 1;
                 printf("%s", line);
-                continue;
             }
+            continue;
         }
 
-        if (printing)
+        if (found){
+
+            int i = 0;
+            while (line[i] == ' ' || line[i] == '\t') i++;
+            if (line[i] == '\n' || line[i] == '\0')
+                continue;
+
             printf("%s", line);
+        }
     }
 
     fclose(fp);
 
-    if (!printing){
-        printf("No entry found for '%s'.\n", target);
-    }
+    if (!found)
+        printf("No entry found for '%s'\n", entryName);
 }
 
 int main(int argc, char **argv){
@@ -146,6 +145,16 @@ int main(int argc, char **argv){
                 print_entry(AUTHORS_FILE, "Author:", argv[i+1]);
             else
                 print_entry(DATABASE_FILE, "Name:", argv[i+1]);
+        }
+        else if (mystrcmp(argv[i], "--edit") == 0){
+            const char *target = argv[i + 1];
+            const char *category = argv[i + 2];
+            const char *newValue = argv[i + 3];
+
+            if (isAuthor)
+                edit_entry(AUTHORS_FILE, "Author:", target, category, newValue);
+            else
+                edit_entry(DATABASE_FILE, "Name:", target, category, newValue);
         }
     }
 

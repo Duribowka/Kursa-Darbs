@@ -1,32 +1,23 @@
-Name: Programming_Dlja_Chajnikov
-Genre: education
-Release date: 12.03.2009
-Weight: 950g
-Price: 15.89$
-Width: 10.50
-Height: 26.70
-Item's Author: Elena_Bobrujska
-Stock: 128
+Name: test
+Genre: experimenti
+Release date: 0.0.0
+Weight: 100g
+Price: 10100 $
+Width: 0 cm
+Height: 2 cm
+Item's Author: Creator
+Stock: 111 in stock
 
-Name: Misha_v_Strane_Sibiri
-Genre: Horror
-Release date: 10.09.2024
-Weight: 480g
+Name: for testing
+Genre: 
+Release date: 0.0.0
 
-Price: 19.99$
-Width: 9.62
-Height: 20.20
-
-Item's Author: Aleksandr_Banochka
-Stock: 243
-
-Name: Ahahaha eto ahahah
-Genre: Rzaka
-Release date: 12.12.2015
 Weight: 0g
-Price: 0.00$
-Width: 0.00
-Height: 0.00
-Author: 
-Stock: 50 in stock
+Price: 0 $
+Width: 0 cm
+Height: 0 cm
+
+
+Item's Author: 
+Stock: 0 in stock
 

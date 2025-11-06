@@ -1,32 +1,20 @@
-Author: Elena_Bobrujska
-Street: Meza_iela_3
-E-mail: elena.dilema@gmail.com
-Web-page: KnigiKnig.lv
-Phone number: +37144760272
-Country: Latvia
-Date of birth: 12.01.2002
-
-Author: Aleksandr_Banochka
-Street: Daugavgrivas_8
-E-mail: banka.bananka@gmail.com
-Web-page: auggh.lv
-Phone number: +37122250222
-Country: Sibir
-Date of birth: 28.10.1999
-
-Author: Aboba_Shrekovicha
-Street: gomunkulnaja_9
-E-mail: shrekovicha@gmail.com
+Author: Creator
+Street: none
+E-mail: creator@gmail.com
 Web-page: 
 Phone number: 
-Country: 
+Country: none
 Date of birth: 0.0.0
 
-Author: Kirill
-Street: Cdebilnaja 9
+Author: Mi sha
+Street: 
+
+
 E-mail: 
 Web-page: 
-Phone number: 3141411
+
+Phone number: 
 Country: 
+
 Date of birth: 0.0.0
 

@@ -12,9 +12,9 @@ struct stocking {
     char *type;
     Date date;
     int weight;
-    float price;
-    float width;
-    float height;
+    int price;
+    int width;
+    int height;
     char *author;
     int stock;
 };

@@ -15,4 +15,6 @@ void remove_entry(const char *filename, const char *label, const char *target);
 
 void print_entry(const char *filename, const char *label, const char *target);
 
+void edit_entry(const char *filename, const char *entryLabel, const char *entryName, const char *category, const char *newValue);
+
 #endif

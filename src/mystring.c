@@ -1,5 +1,4 @@
 #include "mystring.h"
-//NEEDS CHECKING
 
 int mystrcmp(const char *str1, const char *str2){
     while (*str1 && (*str1 == *str2)) {
