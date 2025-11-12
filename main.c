@@ -6,9 +6,13 @@
 #define TEMP_FILE "temporary.txt"
 #define AUTHORS_FILE "authors.txt"
 
-void print_entry(const char *filename, const char *entryLabel, const char *entryName) {
+void help_entry(){
+    printf("Here is list of all flags:\nFor items:\n    -name  <-- set name's value;\n    -type  <-- set category's value;\n    -date  <-- set date's value;\n    -weight  <-- set weight's value;\n    -price  <-- set price's value;\n    -width  <-- set width's value;\n    -height  <-- set height's value;\n    -author  <-- set value of an author in item's description;\n    -stock  <-- set stocking;\n\nFor authors:\n    -name  <-- set name's value;\n    -street  <-- set street's value;\n    -mail  <-- set e-mail's value;\n    -site  <-- set website's value;\n    -phone  <-- set mobile phone's value;\n    -country  <-- set country;\n    -date  <-- set date of birth;\n\nMain flags:\n    --add  <-- append values to database format;\n    --show  <-- show a database block;\n    --edit  <-- edit data in database;\n    --rm  <-- remove database block;\n    --item  <-- program works with items;\n    --author  <-- program works with authors;\n\n*For deeper information see 'README.md'!\n");
+}
+
+void print_entry(const char *filename, const char *entryLabel, const char *entryName){
     FILE *fp = fopen(filename, "r");
-    if (!fp) {
+    if (!fp){
         printf("FAILURE! Could not open %s.\n", filename);
         return;
     }
@@ -49,24 +53,18 @@ void print_entry(const char *filename, const char *entryLabel, const char *entry
         printf("No entry found for '%s'\n", entryName);
 }
 
+//HERE STARTS MAIN
+
 int main(int argc, char **argv){
     struct stocking *s = malloc(sizeof(struct stocking));
     struct author *a = malloc(sizeof(struct author));
-
-    s->name = malloc(100);
-    s->type = malloc(100);
-    s->author = malloc(100);
-
-    a->name = malloc(100);
-    a->street = malloc(100);
-    a->mail = malloc(100);
-    a->website = malloc(100);
-    a->phone = malloc(100);
-    a->country = malloc(100);
-
+ 
     int isAuthor = 0;
 
     for (int i = 1; i < argc; i++) {
+        if (mystrcmp(argv[i], "--help") == 0){
+            help_entry();
+        }
         if (mystrcmp(argv[i], "--author") == 0) isAuthor = 1;
         else if (mystrcmp(argv[i], "--item") == 0) isAuthor = 0;
 
