@@ -61,11 +61,13 @@ int main(int argc, char **argv){
  
     int isAuthor = 0;
 
+    if (argc == 1){
+        help_entry();
+    }
+    
     for (int i = 1; i < argc; i++) {
-        if (argc == 0){
-            help_entry();
-        }
-        else if (mystrcmp(argv[i], "--help") == 0){
+        
+        if (mystrcmp(argv[i], "--help") == 0){
             help_entry();
         }
 
