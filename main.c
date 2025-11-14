@@ -7,7 +7,7 @@
 #define AUTHORS_FILE "authors.txt"
 
 void help_entry(){
-    printf("Here is list of all flags:\nFor items:\n    -name  <-- set name's value;\n    -type  <-- set category's value;\n    -date  <-- set date's value;\n    -weight  <-- set weight's value;\n    -price  <-- set price's value;\n    -width  <-- set width's value;\n    -height  <-- set height's value;\n    -author  <-- set value of an author in item's description;\n    -stock  <-- set stocking;\n\nFor authors:\n    -name  <-- set name's value;\n    -street  <-- set street's value;\n    -mail  <-- set e-mail's value;\n    -site  <-- set website's value;\n    -phone  <-- set mobile phone's value;\n    -country  <-- set country;\n    -date  <-- set date of birth;\n\nMain flags:\n    --add  <-- append values to database format;\n    --show  <-- show a database block;\n    --edit  <-- edit data in database;\n    --rm  <-- remove database block;\n    --item  <-- program works with items;\n    --author  <-- program works with authors;\n\n*For deeper information see 'README.md'!\n");
+    printf("Here is the list of all flags:\nFormat: <flag> --> <explanation> --> <example of usage>\nFlags that assign values: For items:\n    -name --> assigns name's value --> -name <some>/<'some text'>\n    -type --> assigns genre's value --> -type <some>/<'some text'>\n    -date --> assigns date's value --> -date <day> <month> <year>\n    -weight --> assigns weight's value --> -weight <number>\n    -price --> assigns price's value --> -price  <number>\n    -width --> assigns width's value --> -width <number>\n    -height --> assigns height's value --> -height <number>\n    -author --> assigns author's value in item's description --> -author <some>/<'some text'>\n    -stock --> assigns stock's value --> -stock <number>\n\nFor authors:\n    -name --> assigns name's value (for author) --> -name <some>/<'some text'>\n    -street --> assigns street's value --> -street <some>/<'some text'>\n    -mail --> assigns e-mail's value --> -mail <text>\n    -site --> assigns website's value --> -site <text>\n    -phone --> assigns mobile phone's value --> -phone <some>/<'some text'>\n    -country --> assigns country --> -country <some>/<'some text'>\n    -date --> assigns birthdate's value --> -date <day> <month> <year>\n\nGlobal flags:\n    --author --> sets an option to work with author database --> ./main.o --author -name <text> -street <text>\n    --item --> sets an option to work with items in item database (--item is a default option at the start of a program) --> ./main.o --item -name <text> -type <text>\n    --add --> adds a blok of data with values that were assigned before to the one of two databases --> ./main.o -name <text> -type <text> --add\n    --rm --> deletes a block of data from database via entered name of item/author --> ./main.o --rm programming (deletes item from database.txt with the name 'programming')\n    --show --> prints a block of data from database to the terminal based on name of product --> ./main.o --show programming (shows information about item named programming)\n    --edit --> edits a line in database based on name of item/author and category --> ./main.o --edit programming Genre <'new text'> (edits Genre line in item named 'programming')\n");
 }
 
 void print_entry(const char *filename, const char *entryLabel, const char *entryName){
@@ -62,9 +62,13 @@ int main(int argc, char **argv){
     int isAuthor = 0;
 
     for (int i = 1; i < argc; i++) {
-        if (mystrcmp(argv[i], "--help") == 0){
+        if (argc == 0){
             help_entry();
         }
+        else if (mystrcmp(argv[i], "--help") == 0){
+            help_entry();
+        }
+
         if (mystrcmp(argv[i], "--author") == 0) isAuthor = 1;
         else if (mystrcmp(argv[i], "--item") == 0) isAuthor = 0;
 
