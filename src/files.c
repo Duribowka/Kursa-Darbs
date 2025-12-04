@@ -4,7 +4,7 @@
 #include "../headers/mystring.h"
 #include "../headers/files.h"
 
-void append_item(struct stocking *s) {
+void append_item(struct stocking *s){
     FILE *fp = fopen(DATABASE_FILE, "a");
     if (!fp) {
         perror("FAILURE Could not open file.\n");
@@ -19,7 +19,7 @@ void append_item(struct stocking *s) {
     fclose(fp);
 }
 
-void append_author(struct author *a) {
+void append_author(struct author *a){
     FILE *fp = fopen(AUTHORS_FILE, "a");
     if (!fp) {
         perror("FAILURE Could not open file.\n");
@@ -34,7 +34,7 @@ void append_author(struct author *a) {
     fclose(fp);
 }
 
-void remove_entry(const char *filename, const char *label, const char *target) {
+void remove_entry(const char *filename, const char *label, const char *target){
     FILE *in = fopen(filename, "r");
     FILE *out = fopen(TEMP_FILE, "w");
 
@@ -48,7 +48,7 @@ void remove_entry(const char *filename, const char *label, const char *target) {
     char line[256];
     int skipping = 0;
 
-    while (fgets(line, sizeof(line), in)) {
+    while (fgets(line, sizeof(line), in)){
         int i = 0;
         while (line[i] == ' ' || line[i] == '\t') i++;
 
@@ -59,7 +59,7 @@ void remove_entry(const char *filename, const char *label, const char *target) {
             skipping = 0;
         }
 
-        if (!skipping && mystrncmp(line + i, label, mystrlen(label)) == 0) {
+        if (!skipping && mystrncmp(line + i, label, mystrlen(label)) == 0){
             char current[128];
             sscanf(line + i + mystrlen(label), " %[^\n]", current);
             if (mystrcmp(current, target) == 0) {
@@ -81,11 +81,11 @@ void remove_entry(const char *filename, const char *label, const char *target) {
 }
 
 void edit_entry(const char *filename, const char *entryLabel, const char *entryName,
-                const char *category, const char *newValue) {
+                const char *category, const char *newValue){
     FILE *in = fopen(filename, "r");
     FILE *out = fopen(TEMP_FILE, "w");
 
-    if (!in || !out) {
+    if (!in || !out){
         perror("FAILURE Could not open files.\n");
         if (in) fclose(in);
         if (out) fclose(out);
@@ -98,12 +98,12 @@ void edit_entry(const char *filename, const char *entryLabel, const char *entryN
     char catWcolon[128];
     mystrcpy(catWcolon, category);
     int len = mystrlen(catWcolon);
-    if (catWcolon[len - 1] != ':') {
+    if (catWcolon[len - 1] != ':'){
         catWcolon[len] = ':';
         catWcolon[len + 1] = '\0';
     }
 
-    while (fgets(line, sizeof(line), in)) {
+    while (fgets(line, sizeof(line), in)){
         int i = 0;
         while (line[i] == ' ' || line[i] == '\t') i++;
 
@@ -137,4 +137,21 @@ void edit_entry(const char *filename, const char *entryLabel, const char *entryN
     rename(TEMP_FILE, filename);
 
     printf("Edited '%s' in entry '%s' --> '%s'\n", category, entryName, newValue);
+}
+
+void print_whole_file(const char *filename){
+    FILE *fp = fopen(filename, "r");
+
+    if (!fp){
+        printf("Error: Could not open file '%s'\n", filename);
+        return;
+    }
+
+    char buffer[512];
+
+    while (fgets(buffer, sizeof(buffer), fp)){
+        printf("%s", buffer);
+    }
+
+    fclose(fp);
 }
