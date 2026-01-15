@@ -14,4 +14,6 @@ char *mystrcpy(char *dest, const char *source);
 
 int mystrlen(const char *str);
 
+char *my_strdup(const char *src);
+
 #endif

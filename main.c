@@ -1,6 +1,7 @@
 #include "../headers/structs.h"
 #include "../headers/mystring.h"
 #include "../headers/files.h"
+#include "../headers/sortingstuff.h"
 
 #define DATABASE_FILE "database.txt"
 #define TEMP_FILE "temporary.txt"
@@ -227,6 +228,15 @@ int main(int argc, char **argv){
                 edit_entry(AUTHORS_FILE, "Author:", target, category, newValue);
             else
                 edit_entry(DATABASE_FILE, "Name:", target, category, newValue);
+        }
+        else if (mystrcmp(argv[i], "--sort") == 0) {
+            if (i + 1 >= argc) {
+                printf("Error: --sort requires 'alphabet' or 'stock'\n");
+                continue;
+            }
+
+            sort_and_print_items(argv[i + 1]);
+            i++;
         }
     }
     

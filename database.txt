@@ -1,36 +1,67 @@
-Name: test
-Genre: experimenti
-Release date: 0.0.0
+Name: Building guide
+Genre: Education
+Release date: 12.01.2026
 Weight: 100g
 Price: 10100 $
-Width: 0 cm
-Height: 2 cm
-Item's Author: Creator
+Width: 50 cm
+Height: 66 cm
+Item's Author: Bob
 Stock: 111 in stock
 
-Name: for testing
-Genre: 
-Release date: 0.0.0
+Name: Assembling guide
+Genre: Education
+Release date: 12.01.2008
 
-Weight: 0g
-Price: 0 $
-Width: 0 cm
-Height: 0 cm
+Weight: 10g
+Price: 104 $
+Width: 12 cm
+Height: 20 cm
 
 
-Item's Author: 
+Item's Author: Bob
+Stock: 13 in stock
+
+Name: Programming
+Genre: Education
+Release date: 01.01.2026
+Weight: 4545g
+Price: 67534 $
+
+
+
+Width: 234 cm
+Height: 999 cm
+Item's Author: Craig Menear
 Stock: 0 in stock
 
-Name: programming
-Genre: (null)
-Release date: 0.0.0
-Weight: 0g
-Price: 0 $
+Name: Fsomethingidk
+Genre: Comedy
+Release date: 07.11.1997
+Weight: 150g
+Price: 50 $
+Width: 10 cm
+Height: 20 cm
+Item's Author: Arthur
+Stock: 567 in stock
 
+Name: Uhhh Uhhhh
+Genre: Comedy
+Release date: 15.09.2012
+Weight: 300g
+Price: 12 $
+Width: 10 cm
+Height: 23 cm
+Item's Author: Arthur
+Stock: 76 in stock
 
+Name: Very sad
+Genre: Tragedy
+Release date: 01.01.1877
+Weight: 306g
+Price: 306 $
+Width: 17 cm
+Height: 37 cm
 
-Width: 0 cm
-Height: 0 cm
-Item's Author: (null)
-Stock: 0 in stock
+Item's Author: Alex
+Stock: 36 in stock
 

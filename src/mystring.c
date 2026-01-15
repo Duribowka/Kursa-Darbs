@@ -1,4 +1,4 @@
-#include "mystring.h"
+#include "../headers/mystring.h"
 
 int mystrcmp(const char *str1, const char *str2){
     while (*str1 && (*str1 == *str2)) {
@@ -67,4 +67,11 @@ int mystrlen(const char *str){
         len++;
     }
     return len;
+}
+
+char *my_strdup(const char *src) {
+    char *dst = malloc(mystrlen(src) + 1);
+    if (dst)
+        mystrcpy(dst, src);
+    return dst;
 }

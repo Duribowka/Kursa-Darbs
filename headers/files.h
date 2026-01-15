@@ -1,7 +1,7 @@
 #ifndef FILES_H
 #define FILES_H
 
-#include "structs.h"
+#include "../headers/structs.h"
 
 #define DATABASE_FILE "database.txt"
 #define TEMP_FILE "temporary.txt"

@@ -1,5 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
+//#include <stdio.h>
+//#include <stdlib.h>
 #include "../headers/structs.h"
 #include "../headers/mystring.h"
 #include "../headers/files.h"
@@ -139,19 +139,46 @@ void edit_entry(const char *filename, const char *entryLabel, const char *entryN
     printf("Edited '%s' in entry '%s' --> '%s'\n", category, entryName, newValue);
 }
 
-void print_whole_file(const char *filename){
-    FILE *fp = fopen(filename, "r");
+void print_whole_file(const char *filename) {
 
-    if (!fp){
+    FILE *fp = fopen(filename, "r");
+    if (!fp) {
         printf("Error: Could not open file '%s'\n", filename);
         return;
     }
 
-    char buffer[512];
+    char line[512];
+    int firstEntry = 1;
+    int insideEntry = 0;
 
-    while (fgets(buffer, sizeof(buffer), fp)){
-        printf("%s", buffer);
+    while (fgets(line, sizeof(line), fp)) {
+
+        int i = 0;
+        while (line[i] == ' ' || line[i] == '\t')
+            i++;
+
+        int isBlank = (line[i] == '\n' || line[i] == '\0');
+
+        int isEntryStart =
+            (mystrncmp(line + i, "Name:", 5) == 0) ||
+            (mystrncmp(line + i, "Author:", 7) == 0);
+
+        if (isEntryStart) {
+            printf("\n");
+
+            printf("%s", line);
+            insideEntry = 1;
+            firstEntry = 0;
+            continue;
+        }
+
+        if (insideEntry && isBlank)
+            continue;
+
+        if (!isBlank)
+            printf("%s", line);
     }
-
+    printf("\n");
+    
     fclose(fp);
 }
