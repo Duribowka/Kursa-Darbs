@@ -2,6 +2,7 @@
 #include "../headers/mystring.h"
 #include "../headers/files.h"
 #include "../headers/sortingstuff.h"
+#include "../headers/filteringstuff.h"
 
 #define DATABASE_FILE "database.txt"
 #define TEMP_FILE "temporary.txt"
@@ -231,11 +232,27 @@ int main(int argc, char **argv){
         }
         else if (mystrcmp(argv[i], "--sort") == 0) {
             if (i + 1 >= argc) {
-                printf("Error: --sort requires 'alphabet' or 'stock'\n");
+                printf("Error: --sort requires an argument\n");
+                continue;
+            }
+            if (isAuthor)
+                sort_and_print_authors(argv[i + 1]);
+            else
+                sort_and_print_items(argv[i + 1]);
+            
+            i++;
+        }
+        else if (mystrcmp(argv[i], "--filter") == 0) {
+            if (i + 1 >= argc) {
+                printf("Missing filter value\n");
                 continue;
             }
 
-            sort_and_print_items(argv[i + 1]);
+            if (isAuthor)
+                filter_authors_by_country(argv[i + 1]);
+            else
+                filter_items_by_genre(argv[i + 1]);
+
             i++;
         }
     }

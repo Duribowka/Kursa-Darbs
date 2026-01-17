@@ -1,20 +1,36 @@
-Author: Creator
-Street: none
-E-mail: creator@gmail.com
-Web-page: 
-Phone number: 
-Country: none
-Date of birth: 0.0.0
+Author: Bob
+Street: Centrala 20
+E-mail: Bobkovi4@gmail.com
+Web-page: Bobtheauthor.com
+Phone number: +371 233 60 545
+Country: Latvia
+Date of birth: 12.12.1987
 
-Author: Mi sha
-Street: 
+Author: Craig Menear
+Street: Home Depot 20
 
 
+E-mail: craig_menear@homedepot.com.
+Web-page: https://www.homedepot.com
+
+Phone number: (219) 762-6787
+Country: USA
+
+Date of birth: 02.08.1957
+
+Author: Arthur
+Street: London 20
 E-mail: 
 Web-page: 
-
 Phone number: 
-Country: 
+Country: UK
+Date of birth: 21.12.485
 
-Date of birth: 0.0.0
+Author: Alex
+Street: Jana Blaumana 20
+E-mail: Alex2004@inbox.lv
+Web-page: Alextheauthor.lv
+Phone number: +371 233 70 131
+Country: Latvia
+Date of birth: 11.10.2004
 

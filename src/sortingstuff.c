@@ -53,54 +53,55 @@ void sort_and_print_items(const char *mode) {
 
     while (fgets(line, sizeof(line), fp)) {
 
-        /* Skip empty lines */
         if (line[0] == '\n')
             continue;
 
-        if (mystrncmp(line, "Name:", 5) == 0) {
+        char *p = line;
+        while (*p == ' ' || *p == '\t')
+            p++;
+
+        if (mystrncmp(p, "Name:", 5) == 0) {
             char temp[256];
-            sscanf(line + 5, " %[^\n]", temp);
+            sscanf(p + 5, " %[^\n]", temp);
 
             current.name = malloc(mystrlen(temp) + 1);
             mystrcpy(current.name, temp);
         }
-        else if (mystrncmp(line, "Genre:", 6) == 0) {
+        else if (mystrncmp(p, "Genre:", 6) == 0) {
             char temp[256];
-            sscanf(line + 6, " %[^\n]", temp);
+            sscanf(p + 6, " %[^\n]", temp);
 
             current.type = malloc(mystrlen(temp) + 1);
             mystrcpy(current.type, temp);
         }
-        else if (mystrncmp(line, "Release date:", 13) == 0) {
-            sscanf(line + 13, "%d.%d.%d",
+        else if (mystrncmp(p, "Release date:", 13) == 0) {
+            sscanf(p + 13, "%d.%d.%d",
                    &current.date.day,
                    &current.date.month,
                    &current.date.year);
         }
-        else if (mystrncmp(line, "Weight:", 7) == 0) {
-            sscanf(line + 7, "%d", &current.weight);
+        else if (mystrncmp(p, "Weight:", 7) == 0) {
+            sscanf(p + 7, "%d", &current.weight);
         }
-        else if (mystrncmp(line, "Price:", 6) == 0) {
-            sscanf(line + 6, "%d", &current.price);
+        else if (mystrncmp(p, "Price:", 6) == 0) {
+            sscanf(p + 6, "%d", &current.price);
         }
-        else if (mystrncmp(line, "Width:", 6) == 0) {
-            sscanf(line + 6, "%d", &current.width);
+        else if (mystrncmp(p, "Width:", 6) == 0) {
+            sscanf(p + 6, "%d", &current.width);
         }
-        else if (mystrncmp(line, "Height:", 7) == 0) {
-            sscanf(line + 7, "%d", &current.height);
+        else if (mystrncmp(p, "Height:", 7) == 0) {
+            sscanf(p + 7, "%d", &current.height);
         }
-        else if (mystrncmp(line, "Author:", 14) == 0) {
-            //char value[128];
-            char temp[128];
-            sscanf(line + 7, " %[^\n]", temp);
+        else if (mystrncmp(p, "Item's Author:", 14) == 0) {
+            char temp[256];
+            sscanf(p + 14, " %[^\n]", temp);
+
             current.author = malloc(mystrlen(temp) + 1);
             mystrcpy(current.author, temp);
-            //current.author = my_strdup(value);
         }
-        else if (mystrncmp(line, "Stock:", 6) == 0) {
-            sscanf(line + 6, "%d", &current.stock);
+        else if (mystrncmp(p, "Stock:", 6) == 0) {
+            sscanf(p + 6, "%d", &current.stock);
 
-            /* Finalize item */
             items[count++] = current;
             current = (struct stocking){0};
         }
@@ -113,7 +114,6 @@ void sort_and_print_items(const char *mode) {
         return;
     }
 
-    /* Sorting */
     if (mystrcmp(mode, "alphabet") == 0)
         bubble_sort_name(items, count);
     else if (mystrcmp(mode, "stock") == 0)
@@ -127,7 +127,6 @@ void sort_and_print_items(const char *mode) {
         return;
     }
 
-    /* Print */
     for (int i = 0; i < count; i++) {
         printf("Name: %s\n", items[i].name);
         printf("Genre: %s\n", items[i].type);
@@ -146,7 +145,6 @@ void sort_and_print_items(const char *mode) {
             printf("\n");
     }
 
-    /* Cleanup */
     for (int i = 0; i < count; i++) {
         free(items[i].name);
         free(items[i].type);
@@ -178,5 +176,162 @@ void bubble_sort_date(struct stocking items[], int count) {
                 items[j + 1] = temp;
             }
         }
+    }
+}
+
+void bubble_sort_author_name(struct author authors[], int count) {
+    for (int i = 0; i < count - 1; i++) {
+        for (int j = 0; j < count - i - 1; j++) {
+            if (mystrcmp(authors[j].name, authors[j + 1].name) > 0) {
+                struct author tmp = authors[j];
+                authors[j] = authors[j + 1];
+                authors[j + 1] = tmp;
+            }
+        }
+    }
+}
+
+void bubble_sort_author_date(struct author authors[], int count) {
+    for (int i = 0; i < count - 1; i++) {
+        for (int j = 0; j < count - i - 1; j++) {
+
+            Date d1 = authors[j].birthdate;
+            Date d2 = authors[j + 1].birthdate;
+
+            int swap = 0;
+
+            if (d1.year < d2.year)
+                swap = 1;
+            else if (d1.year == d2.year && d1.month < d2.month)
+                swap = 1;
+            else if (d1.year == d2.year &&
+                     d1.month == d2.month &&
+                     d1.day < d2.day)
+                swap = 1;
+
+            if (swap) {
+                struct author tmp = authors[j];
+                authors[j] = authors[j + 1];
+                authors[j + 1] = tmp;
+            }
+        }
+    }
+}
+
+void sort_and_print_authors(const char *mode) {
+
+    FILE *fp = fopen("authors.txt", "r");
+    if (!fp) {
+        printf("Error: Could not open authors.txt\n");
+        return;
+    }
+
+    struct author authors[100];
+    int count = 0;
+
+    char line[256];
+    struct author current = {0};
+
+    while (fgets(line, sizeof(line), fp)) {
+
+        if (line[0] == '\n')
+            continue;
+
+        char *p = line;
+        while (*p == ' ' || *p == '\t')
+            p++;
+
+        if (mystrncmp(p, "Author:", 7) == 0) {
+            char temp[256];
+            sscanf(p + 7, " %[^\n]", temp);
+
+            current.name = malloc(mystrlen(temp) + 1);
+            mystrcpy(current.name, temp);
+        }
+        else if (mystrncmp(p, "Street:", 7) == 0) {
+            char temp[256];
+            sscanf(p + 7, " %[^\n]", temp);
+
+            current.street = malloc(mystrlen(temp) + 1);
+            mystrcpy(current.street, temp);
+        }
+        else if (mystrncmp(p, "E-mail:", 7) == 0) {
+            char temp[256];
+            sscanf(p + 7, " %[^\n]", temp);
+
+            current.mail = malloc(mystrlen(temp) + 1);
+            mystrcpy(current.mail, temp);
+        }
+        else if (mystrncmp(p, "Web-page:", 9) == 0) {
+            char temp[256];
+            sscanf(p + 9, " %[^\n]", temp);
+
+            current.website = malloc(mystrlen(temp) + 1);
+            mystrcpy(current.website, temp);
+        }
+        else if (mystrncmp(p, "Phone number:", 13) == 0) {
+            char temp[256];
+            sscanf(p + 13, " %[^\n]", temp);
+
+            current.phone = malloc(mystrlen(temp) + 1);
+            mystrcpy(current.phone, temp);
+        }
+        else if (mystrncmp(p, "Country:", 8) == 0) {
+            char temp[256];
+            sscanf(p + 8, " %[^\n]", temp);
+
+            current.country = malloc(mystrlen(temp) + 1);
+            mystrcpy(current.country, temp);
+        }
+        else if (mystrncmp(p, "Date of birth:", 14) == 0) {
+            sscanf(p + 14, "%d.%d.%d",
+                   &current.birthdate.day,
+                   &current.birthdate.month,
+                   &current.birthdate.year);
+
+            authors[count++] = current;
+            current = (struct author){0};
+        }
+    }
+
+    fclose(fp);
+
+    if (count == 0) {
+        printf("No authors found.\n");
+        return;
+    }
+
+    if (mystrcmp(mode, "alphabet") == 0)
+        bubble_sort_author_name(authors, count);
+    else if (mystrcmp(mode, "date") == 0)
+        bubble_sort_author_date(authors, count);
+    else {
+        printf("Unknown sort mode: %s\n", mode);
+        return;
+    }
+
+    for (int i = 0; i < count; i++) {
+        printf("Author: %s\n", authors[i].name);
+        printf("Street: %s\n", authors[i].street);
+        printf("E-mail: %s\n", authors[i].mail);
+        printf("Web-page: %s\n", authors[i].website);
+        printf("Phone number: %s\n", authors[i].phone);
+        printf("Country: %s\n", authors[i].country);
+        printf("Date of birth: %d.%d.%d\n",
+               authors[i].birthdate.day,
+               authors[i].birthdate.month,
+               authors[i].birthdate.year);
+
+        if (i < count - 1)
+            printf("\n");
+    }
+
+    for (int i = 0; i < count; i++) {
+        free(authors[i].name);
+        free(authors[i].street);
+        free(authors[i].mail);
+        free(authors[i].website);
+        free(authors[i].phone);
+        free(authors[i].country);
     }
 }

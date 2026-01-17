@@ -15,4 +15,10 @@ void sort_and_print_items(const char *mode);
 
 void bubble_sort_date(struct stocking items[], int count);
 
+void bubble_sort_author_name(struct author authors[], int count);
+
+void bubble_sort_author_date(struct author authors[], int count);
+
+void sort_and_print_authors(const char *mode);
+
 #endif
