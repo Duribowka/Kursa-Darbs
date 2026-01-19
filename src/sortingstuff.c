@@ -45,8 +45,9 @@ void sort_and_print_items(const char *mode) {
         return;
     }
 
-    struct stocking items[100];
+    struct stocking *items = NULL;
     int count = 0;
+    int capacity = 0;
 
     char line[256];
     struct stocking current = {0};
@@ -63,16 +64,12 @@ void sort_and_print_items(const char *mode) {
         if (mystrncmp(p, "Name:", 5) == 0) {
             char temp[256];
             sscanf(p + 5, " %[^\n]", temp);
-
-            current.name = malloc(mystrlen(temp) + 1);
-            mystrcpy(current.name, temp);
+            current.name = my_strdup(temp);
         }
         else if (mystrncmp(p, "Genre:", 6) == 0) {
             char temp[256];
             sscanf(p + 6, " %[^\n]", temp);
-
-            current.type = malloc(mystrlen(temp) + 1);
-            mystrcpy(current.type, temp);
+            current.type = my_strdup(temp);
         }
         else if (mystrncmp(p, "Release date:", 13) == 0) {
             sscanf(p + 13, "%d.%d.%d",
@@ -95,12 +92,22 @@ void sort_and_print_items(const char *mode) {
         else if (mystrncmp(p, "Item's Author:", 14) == 0) {
             char temp[256];
             sscanf(p + 14, " %[^\n]", temp);
-
-            current.author = malloc(mystrlen(temp) + 1);
-            mystrcpy(current.author, temp);
+            current.author = my_strdup(temp);
         }
         else if (mystrncmp(p, "Stock:", 6) == 0) {
             sscanf(p + 6, "%d", &current.stock);
+
+            if (count == capacity) {
+                capacity = (capacity == 0) ? 4 : capacity * 2;
+                struct stocking *tmp =
+                    realloc(items, capacity * sizeof(struct stocking));
+                if (!tmp) {
+                    printf("Memory allocation failed\n");
+                    fclose(fp);
+                    return;
+                }
+                items = tmp;
+            }
 
             items[count++] = current;
             current = (struct stocking){0};
@@ -111,6 +118,7 @@ void sort_and_print_items(const char *mode) {
 
     if (count == 0) {
         printf("No items found.\n");
+        free(items);
         return;
     }
 
@@ -124,6 +132,7 @@ void sort_and_print_items(const char *mode) {
         bubble_sort_date(items, count);
     else {
         printf("Unknown sort mode: %s\n", mode);
+        free(items);
         return;
     }
 
@@ -150,6 +159,7 @@ void sort_and_print_items(const char *mode) {
         free(items[i].type);
         free(items[i].author);
     }
+    free(items);
 }
 
 void bubble_sort_date(struct stocking items[], int count) {
@@ -226,8 +236,9 @@ void sort_and_print_authors(const char *mode) {
         return;
     }
 
-    struct author authors[100];
+    struct author *authors = NULL;
     int count = 0;
+    int capacity = 0;
 
     char line[256];
     struct author current = {0};
@@ -244,50 +255,50 @@ void sort_and_print_authors(const char *mode) {
         if (mystrncmp(p, "Author:", 7) == 0) {
             char temp[256];
             sscanf(p + 7, " %[^\n]", temp);
-
-            current.name = malloc(mystrlen(temp) + 1);
-            mystrcpy(current.name, temp);
+            current.name = my_strdup(temp);
         }
         else if (mystrncmp(p, "Street:", 7) == 0) {
             char temp[256];
             sscanf(p + 7, " %[^\n]", temp);
-
-            current.street = malloc(mystrlen(temp) + 1);
-            mystrcpy(current.street, temp);
+            current.street = my_strdup(temp);
         }
         else if (mystrncmp(p, "E-mail:", 7) == 0) {
             char temp[256];
             sscanf(p + 7, " %[^\n]", temp);
-
-            current.mail = malloc(mystrlen(temp) + 1);
-            mystrcpy(current.mail, temp);
+            current.mail = my_strdup(temp);
         }
         else if (mystrncmp(p, "Web-page:", 9) == 0) {
             char temp[256];
             sscanf(p + 9, " %[^\n]", temp);
-
-            current.website = malloc(mystrlen(temp) + 1);
-            mystrcpy(current.website, temp);
+            current.website = my_strdup(temp);
         }
         else if (mystrncmp(p, "Phone number:", 13) == 0) {
             char temp[256];
             sscanf(p + 13, " %[^\n]", temp);
-
-            current.phone = malloc(mystrlen(temp) + 1);
-            mystrcpy(current.phone, temp);
+            current.phone = my_strdup(temp);
         }
         else if (mystrncmp(p, "Country:", 8) == 0) {
             char temp[256];
             sscanf(p + 8, " %[^\n]", temp);
-
-            current.country = malloc(mystrlen(temp) + 1);
-            mystrcpy(current.country, temp);
+            current.country = my_strdup(temp);
         }
         else if (mystrncmp(p, "Date of birth:", 14) == 0) {
             sscanf(p + 14, "%d.%d.%d",
                    &current.birthdate.day,
                    &current.birthdate.month,
                    &current.birthdate.year);
+
+            if (count == capacity) {
+                capacity = (capacity == 0) ? 4 : capacity * 2;
+                struct author *tmp =
+                    realloc(authors, capacity * sizeof(struct author));
+                if (!tmp) {
+                    printf("Memory allocation failed\n");
+                    fclose(fp);
+                    return;
+                }
+                authors = tmp;
+            }
 
             authors[count++] = current;
             current = (struct author){0};
@@ -298,6 +309,7 @@ void sort_and_print_authors(const char *mode) {
 
     if (count == 0) {
         printf("No authors found.\n");
+        free(authors);
         return;
     }
 
@@ -307,6 +319,7 @@ void sort_and_print_authors(const char *mode) {
         bubble_sort_author_date(authors, count);
     else {
         printf("Unknown sort mode: %s\n", mode);
+        free(authors);
         return;
     }
 
@@ -334,4 +347,5 @@ void sort_and_print_authors(const char *mode) {
         free(authors[i].phone);
         free(authors[i].country);
     }
+    free(authors);
 }
