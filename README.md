@@ -19,6 +19,12 @@ HOW TO USE!!!
 
 6. Block of data can be completely removed with "--rm" flag like this: ./main.o --rm <name>
 
-7. And lastly program can be compiled with "make main" command and "make clean" removes    all .o files.
+7. The data inside file can be sorted and printed with "--sort" command. Sorting options: alphabet, stock, price, date
+
+8. To filter a file and print it use command "--filter". Example: ./main.o --filter Education
+
+9. To filter AND sort output of the whole file use "--filter+sort" command. Example: ./main.o --filter+sort Education price
+
+10. And lastly program can be compiled with "make main" command and "make clean" removes all object files.
 
 I hope this program is great to work with :)
